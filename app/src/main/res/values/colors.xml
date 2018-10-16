@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/n11</color>
+    <color name="colorPrimaryDark">@color/n11Darker</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAcceptGreen">#4CAF50</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorLightGrey">#f5f5f5</color>
+
+    <color name="n1">#333333</color>
+    <color name="n2">#3E4757</color>
+    <color name="n3">#9299A2</color>
+    <color name="n4">#C7C9CC</color>
+    <color name="n5">#DDDFE0</color>
+    <color name="n6">#EAECEE</color>
+    <color name="n7">#F6F7F8</color>
+    <color name="n8">#009ECF</color>
+    <color name="n9">#FFDD2D</color>
+    <color name="n10">#DD5656</color>
+    <color name="n10Darker">#c64d4d</color>
+    <color name="n11">#22A053</color>
+    <color name="n11Darker">#1f8e4a</color>
+    <color name="n12">#ffcd33</color>
+
+    <color name="text_dark">@color/n1</color>
+    <color name="text_light">@color/n3</color>
+    <color name="text_hint">@color/n4</color>
+    <color name="text_blue">@color/n8</color>
+    <color name="text_red">@color/n10</color>
+
+</resources>
