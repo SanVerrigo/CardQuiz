@@ -17,15 +17,25 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PackNameDialogFragment.PackNameDialogListener {
 
+    CardQuizDBHelper dbHelper;
+    PackAdapter packAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.activity_main_recycler_view);
-        PackAdapter packAdapter = new PackAdapter();
-        packAdapter.setPackList(testList());
+        packAdapter = new PackAdapter();
         recyclerView.setAdapter(packAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        dbHelper = new CardQuizDBHelper(this);
+        packAdapter.setPackList(dbHelper.getPackList());
     }
 
     @Override
@@ -38,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements PackNameDialogFra
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_activity_main_create_pack:
-                Toast.makeText(this, "dsa", Toast.LENGTH_SHORT).show();
                 PackNameDialogFragment dialogFragment = new PackNameDialogFragment();
                 dialogFragment.show(getSupportFragmentManager(), "packName");
                 return true;
@@ -47,17 +56,22 @@ public class MainActivity extends AppCompatActivity implements PackNameDialogFra
         }
     }
 
-    private List<Pack> testList() {
-        List<Pack> list = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            list.add(new Pack(String.format("Pack for us %d", i)));
-        }
-        return list;
-    }
+//    private List<Pack> testList() {
+//        List<Pack> list = new ArrayList<>();
+//        for (int i = 0; i < 12; i++) {
+//            list.add(new Pack(String.format("Pack for us %d", i)));
+//        }
+//        return list;
+//    }
 
     @Override
     public void onDialogPositiveButtonClick(DialogFragment dialogFragment, EditText editTextPackName) {
         String packName = editTextPackName.getText().toString();
-        startActivity(new PackActivity().createIntent(this, packName));
+        if (!dbHelper.doesPackExistByPackName(packName)) {
+            dbHelper.addNewPack(new Pack(packName));
+            startActivity(new PackActivity().createIntent(this, packName));
+        } else {
+            Toast.makeText(this, String.format("Пакет с именем '%s' уже существует", packName), Toast.LENGTH_SHORT).show();
+        }
     }
 }

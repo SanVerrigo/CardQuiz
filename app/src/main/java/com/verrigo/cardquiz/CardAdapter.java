@@ -2,6 +2,7 @@ package com.verrigo.cardquiz;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Card card = cardList.get(i);
+        final Card card = cardList.get(i);
         viewHolder.questionText.setText(card.getQuestion());
+        viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new CardActivity().createIntentForEditing(context, card.get_id(), card.getPackName(), card.getQuestion(), card.getAnswer(), CardActivity.INTENTION_EDIT));
+            }
+        });
     }
 
     @Override
@@ -42,9 +49,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView questionText;
+        private ConstraintLayout mainContainer;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mainContainer = itemView.findViewById(R.id.card_item_main_container);
             questionText = itemView.findViewById(R.id.card_item_question_text);
         }
     }

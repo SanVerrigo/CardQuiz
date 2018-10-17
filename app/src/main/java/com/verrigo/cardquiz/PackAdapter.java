@@ -1,11 +1,15 @@
 package com.verrigo.cardquiz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -25,8 +29,20 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Pack pack = packList.get(i);
+        final Pack pack = packList.get(i);
         viewHolder.packNameTextView.setText(pack.getPackName());
+        viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new PackActivity().createIntent(context, pack.getPackName()));
+            }
+        });
+        viewHolder.startQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, QuizActivity.class));
+            }
+        });
     }
 
     @Override
@@ -42,9 +58,13 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView packNameTextView;
+        private ImageButton startQuizButton;
+        private ConstraintLayout mainContainer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            startQuizButton = itemView.findViewById(R.id.pack_item_start_quiz_button);
+            mainContainer = itemView.findViewById(R.id.pack_item_main_container);
             packNameTextView = itemView.findViewById(R.id.pack_item_pack_name);
         }
     }

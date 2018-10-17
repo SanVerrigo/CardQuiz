@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +18,33 @@ public class PackActivity extends AppCompatActivity {
     private static final String PACK_NAME = "packName";
 
     private String packName;
+    private CardAdapter cardAdapter;
+    private CardQuizDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
         setContentView(R.layout.activity_pack);
-
+        Intent intent = getIntent();
         packName = intent.getStringExtra(PACK_NAME);
         getSupportActionBar().setTitle(packName);
-        CardAdapter cardAdapter = new CardAdapter();
+        cardAdapter = new CardAdapter();
+        dbHelper = new CardQuizDBHelper(this);
         RecyclerView recyclerView = findViewById(R.id.activity_pack_recycler_view);
-        cardAdapter.setCardList(testList());
         recyclerView.setAdapter(cardAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            cardAdapter.setCardList(dbHelper.getCardListByPackName(packName));
+        } catch (Exception ex) {
+            cardAdapter.setCardList(testList());
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -44,7 +57,12 @@ public class PackActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_activity_pack_create_item:
-                startActivity(new Intent(PackActivity.this, CardActivity.class));
+                startActivity(new CardActivity().createIntentForCreation(this, packName, CardActivity.INTENTION_CREATE));
+                return true;
+            case R.id.menu_activity_pack_delete_pack:
+                // TODO: 17.10.2018 change this to the alert dialog
+                dbHelper.deletePackByPackName(packName);
+                finish();
                 return true;
             default:
                 return true;

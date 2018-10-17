@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText android:id="@+id/dialog_pack_name_edit_text"
+        android:inputType="text|textCapSentences|textAutoCorrect"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Имя"

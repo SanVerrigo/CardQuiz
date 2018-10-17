@@ -21,11 +21,11 @@
     <color name="n11">#22A053</color>
     <color name="n11Darker">#1f8e4a</color>
     <color name="n12">#ffcd33</color>
+    <color name="n13">#236C8C</color>
 
     <color name="text_dark">@color/n1</color>
     <color name="text_light">@color/n3</color>
     <color name="text_hint">@color/n4</color>
     <color name="text_blue">@color/n8</color>
     <color name="text_red">@color/n10</color>
-
 </resources>
