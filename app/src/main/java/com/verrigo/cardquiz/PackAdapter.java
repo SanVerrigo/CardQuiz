@@ -18,11 +18,13 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
 
     private List<Pack> packList;
     private Context context;
+    private CardQuizDBHelper dbHelper;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
+        dbHelper = new CardQuizDBHelper(context);
         View view = LayoutInflater.from(context).inflate(R.layout.pack_item, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -31,16 +33,20 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final Pack pack = packList.get(i);
         viewHolder.packNameTextView.setText(pack.getPackName());
+        if (!dbHelper.getCardListByPackName(pack.getPackName()).isEmpty()) {
+            viewHolder.startQuizButton.setClickable(true);
+            viewHolder.startQuizButton.setImageResource(R.drawable.ic_play_arrow_green_48dp);
+            viewHolder.startQuizButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new QuizActivity().createIntent(context, pack.getPackName()));
+                }
+            });
+        }
         viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 context.startActivity(new PackActivity().createIntent(context, pack.getPackName()));
-            }
-        });
-        viewHolder.startQuizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.startActivity(new Intent(context, QuizActivity.class));
             }
         });
     }

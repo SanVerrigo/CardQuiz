@@ -6,65 +6,133 @@
     android:layout_height="match_parent"
     tools:context=".CardActivity">
 
-    <TextView android:id="@+id/activity_card_text_to_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Вопрос:"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/activity_card_question"
-        app:layout_constraintLeft_toLeftOf="@id/activity_card_question"
-        />
-
-    <EditText
-        android:id="@+id/activity_card_question"
+    <ScrollView
+        android:id="@+id/activity_card_text_main_container"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:hint="Вопрос"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-        android:minLines="3"
-        app:layout_constraintTop_toBottomOf="@id/activity_card_text_to_question"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView android:id="@+id/activity_card_text_to_answer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ответ:"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        app:layout_constraintLeft_toLeftOf="@id/activity_card_answer"
-        app:layout_constraintTop_toBottomOf="@id/activity_card_question"
-        app:layout_constraintBottom_toTopOf="@id/activity_card_answer"/>
-
-    <EditText
-        android:id="@+id/activity_card_answer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:hint="Ответ"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-        android:minLines="3"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/activity_card_foot_container"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_card_text_to_answer" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/activity_card_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/colorAcceptGreen"
-        android:src="@drawable/ic_check_white_24dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/activity_card_text_to_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Вопрос:"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toTopOf="@id/activity_card_question"
+                app:layout_constraintLeft_toLeftOf="@id/activity_card_question"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/activity_card_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/open_sans_light"
+                android:hint="Вопрос"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                android:minLines="3"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_card_text_to_question" />
+
+            <TextView
+                android:id="@+id/activity_card_text_to_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Ответ:"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toTopOf="@id/activity_card_answer"
+                app:layout_constraintLeft_toLeftOf="@id/activity_card_answer"
+                app:layout_constraintTop_toBottomOf="@id/activity_card_question" />
+
+            <EditText
+                android:id="@+id/activity_card_answer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/open_sans_light"
+                android:hint="Ответ"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                android:minLines="3"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_card_text_to_answer" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+    <!--<View-->
+        <!--android:id="@+id/activity_card_divider"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/n3"-->
+        <!--app:layout_constraintBottom_toTopOf="@id/activity_card_foot_container"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent" />-->
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/activity_card_foot_container"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Готово"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/n7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/activity_card_fab"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="16dp"-->
+    <!--android:backgroundTint="@color/colorAcceptGreen"-->
+    <!--android:src="@drawable/ic_check_white_24dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>

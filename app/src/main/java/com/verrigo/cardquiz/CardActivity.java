@@ -39,7 +39,7 @@ public class CardActivity extends AppCompatActivity {
         intent = getIntent();
         final String packName = intent.getStringExtra(PACK_NAME);
         currentIntention = intent.getStringExtra(INTENTION);
-        FloatingActionButton fab = findViewById(R.id.activity_card_fab);
+        View view = findViewById(R.id.activity_card_foot_container);
         switch (currentIntention) {
             case INTENTION_EDIT:
                 _id = intent.getExtras().getInt(ID);
@@ -47,7 +47,7 @@ public class CardActivity extends AppCompatActivity {
                 answer = intent.getStringExtra(ANSWER);
                 questionEditText.setText(question);
                 answerEditText.setText(answer);
-                fab.setOnClickListener(new View.OnClickListener() {
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (!(questionEditText.getText().toString().isEmpty() && answerEditText.getText().toString().isEmpty())) {
@@ -61,7 +61,7 @@ public class CardActivity extends AppCompatActivity {
                 break;
 
             case INTENTION_CREATE:
-                fab.setOnClickListener(new View.OnClickListener() {
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (!(questionEditText.getText().toString().isEmpty() && answerEditText.getText().toString().isEmpty())) {
