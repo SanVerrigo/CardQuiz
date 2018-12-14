@@ -2,6 +2,9 @@ package com.verrigo.cardquiz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ public class CardActivity extends AppCompatActivity {
     private String answer;
     private CardQuizDBHelper dbHelper;
     private Intent intent;
+    private Card cardToSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class CardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (!(questionEditText.getText().toString().isEmpty() && answerEditText.getText().toString().isEmpty())) {
+//                            cardToSet = new Card(packName, questionEditText.getText().toString(), answerEditText.getText().toString());
                             dbHelper.changeCardWithId(new Card(_id, packName, questionEditText.getText().toString(), answerEditText.getText().toString()));
                             finish();
                         } else {
@@ -66,6 +71,7 @@ public class CardActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (!(questionEditText.getText().toString().isEmpty() && answerEditText.getText().toString().isEmpty())) {
                             try {
+//                                cardToSet = new Card(packName, questionEditText.getText().toString(), answerEditText.getText().toString());
                                 dbHelper.addNewCard(new Card(packName, questionEditText.getText().toString(), answerEditText.getText().toString()));
                                 finish();
                             } catch (Exception ex) {
@@ -112,6 +118,7 @@ public class CardActivity extends AppCompatActivity {
                 .putExtra(PACK_NAME, packName)
                 .putExtra(INTENTION, intention);
     }
+
     public Intent createIntentForEditing(Context context, int _id, String packName, String question, String answer, String intention) {
         return new Intent(context, this.getClass())
                 .putExtra(ID, _id)
@@ -120,5 +127,6 @@ public class CardActivity extends AppCompatActivity {
                 .putExtra(ANSWER, answer)
                 .putExtra(INTENTION, intention);
     }
+
 
 }

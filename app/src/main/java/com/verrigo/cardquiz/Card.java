@@ -7,6 +7,8 @@ public class Card {
     private String question;
     private String answer;
 
+    private boolean isShown = true;
+
     public Card(String packName, String question, String answer) {
         this.packName = packName;
         this.question = question;
@@ -14,6 +16,14 @@ public class Card {
     }
 
     public Card(int _id, String packName, String question, String answer) {
+        this._id = _id;
+        this.packName = packName;
+        this.question = question;
+        this.answer = answer;
+    }
+
+public Card(int _id, String packName, String question, String answer, boolean isShown) {
+        this.isShown = isShown;
         this._id = _id;
         this.packName = packName;
         this.question = question;
@@ -41,5 +51,13 @@ public class Card {
 
     public int get_id() {
         return _id;
+    }
+
+    public void setShown(boolean shown) {
+        isShown = shown;
+    }
+
+    public boolean isShown() {
+        return isShown;
     }
 }

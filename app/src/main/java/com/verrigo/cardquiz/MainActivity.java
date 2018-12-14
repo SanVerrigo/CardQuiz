@@ -1,24 +1,25 @@
 package com.verrigo.cardquiz;
 
-import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PackNameDialogFragment.PackNameDialogListener {
 
+    private static final String CHECK_STATE = "checkState";
     CardQuizDBHelper dbHelper;
     PackAdapter packAdapter;
+    Switch aSwitch;
+    public final static String CHAOTIC_MODE = "chaoticMode";
+    public final static String NORMAL_MODE = "normalMode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,29 @@ public class MainActivity extends AppCompatActivity implements PackNameDialogFra
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.activity_main_recycler_view);
         packAdapter = new PackAdapter();
-        recyclerView.setAdapter(packAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        aSwitch = findViewById(R.id.activity_main_switch);
+        if (savedInstanceState != null) {
+            aSwitch.setChecked(savedInstanceState.getBoolean(CHECK_STATE));
+            packAdapter.setMode(savedInstanceState.getBoolean(CHECK_STATE) ? CHAOTIC_MODE : NORMAL_MODE);
+        }
 
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                packAdapter.setMode(b ? CHAOTIC_MODE : NORMAL_MODE);
+            }
+        });
+
+        recyclerView.setAdapter(packAdapter);
+        recyclerView.addItemDecoration(new VerticalDividerDecoration(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         dbHelper = new CardQuizDBHelper(this);
+        packAdapter.setMode(aSwitch.isChecked() ? CHAOTIC_MODE : NORMAL_MODE);
         packAdapter.setPackList(dbHelper.getPackList());
     }
 
@@ -56,7 +71,13 @@ public class MainActivity extends AppCompatActivity implements PackNameDialogFra
         }
     }
 
-//    private List<Pack> testList() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(CHECK_STATE, aSwitch.isChecked());
+        super.onSaveInstanceState(outState);
+    }
+
+    //    private List<Pack> testList() {
 //        List<Pack> list = new ArrayList<>();
 //        for (int i = 0; i < 12; i++) {
 //            list.add(new Pack(String.format("Pack for us %d", i)));

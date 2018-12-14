@@ -1,7 +1,6 @@
 package com.verrigo.cardquiz;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,6 +17,10 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
     private List<Pack> packList;
     private Context context;
     private CardQuizDBHelper dbHelper;
+    private String mode;
+    List<Card> cardList;
+
+
 
     @NonNull
     @Override
@@ -29,19 +31,31 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final Pack pack = packList.get(i);
+        boolean isAvailable = false;
+        cardList = dbHelper.getCardListByPackName(pack.getPackName());
+        for (Card each : cardList) {
+            if (each.isShown()) {
+                isAvailable = true;
+                break;
+            }
+        }
         viewHolder.packNameTextView.setText(pack.getPackName());
-        if (!dbHelper.getCardListByPackName(pack.getPackName()).isEmpty()) {
+        if (!cardList.isEmpty() && isAvailable) {
             viewHolder.startQuizButton.setClickable(true);
             viewHolder.startQuizButton.setImageResource(R.drawable.ic_play_arrow_green_48dp);
             viewHolder.startQuizButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new QuizActivity().createIntent(context, pack.getPackName()));
+                    context.startActivity(new QuizActivity().createIntent(context, pack.getPackName(), getMode()));
                 }
             });
+        } else {
+            viewHolder.startQuizButton.setClickable(false);
+            viewHolder.startQuizButton.setImageResource(R.drawable.ic_play_arrow_gray_48dp);
         }
         viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +72,16 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
 
     public void setPackList(List<Pack> packList) {
         this.packList = packList;
+
         notifyDataSetChanged();
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public String getMode() {
+        return mode;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

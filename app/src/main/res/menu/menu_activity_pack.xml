@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_activity_pack_delete_pack"
-        android:title="Delete"
+    <item
+        android:id="@+id/menu_activity_pack_share_pack"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:title="Поделиться"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_activity_pack_delete_pack"
         android:icon="@drawable/ic_delete_white_24dp"
-        app:showAsAction="ifRoom"
-        />
+        android:title="Удалить"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_activity_pack_create_item"
-        android:title="Create"
         android:icon="@drawable/ic_add_white_24dp"
-        app:showAsAction="always"
-        />
+        android:title="Create"
+        app:showAsAction="always" />
 </menu>

@@ -90,6 +90,7 @@
 
 
     <android.support.constraint.ConstraintLayout
+        android:elevation="4dp"
         android:id="@+id/activity_card_foot_container"
         android:layout_width="0dp"
         android:layout_height="48dp"

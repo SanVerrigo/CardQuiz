@@ -22,6 +22,7 @@
     <color name="n11Darker">#1f8e4a</color>
     <color name="n12">#ffcd33</color>
     <color name="n13">#236C8C</color>
+    <color name="n14">#d7fcd7</color>
 
     <color name="text_dark">@color/n1</color>
     <color name="text_light">@color/n3</color>

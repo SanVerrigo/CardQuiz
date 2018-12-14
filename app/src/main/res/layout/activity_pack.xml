@@ -9,6 +9,9 @@
     <android.support.v7.widget.RecyclerView android:id="@+id/activity_pack_recycler_view"
         android:layout_width="match_parent"
         tools:listitem="@layout/card_item"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        />
 
 </android.support.constraint.ConstraintLayout>
